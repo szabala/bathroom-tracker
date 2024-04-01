@@ -25,9 +25,9 @@ def extract_user_and_datetime(message: str) -> Tuple[datetime, str]:
     parts[0], parts[1] = parts[0].zfill(2), parts[1].zfill(2)  # Zero-padding for day and month
     datetime_str = '/'.join(parts)
     datetime_str = datetime_str.replace('\u202f', ' ')
-    print(datetime_str)
-    datetime_obj = datetime.strptime(datetime_str, '%m/%d/%y, %I:%M %p')
-
+    # Might need to debug date string due to whatsapp export format changes
+    # print(datetime_str)
+    datetime_obj = datetime.strptime(datetime_str, '%m/%d/%y, %H:%M')
     user, _, _ = rest.partition(':')
     return datetime_obj, user.strip()
 
