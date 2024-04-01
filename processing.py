@@ -20,11 +20,13 @@ EMOJIS_TO_TEXT = {'💩': "caca", '🗄️': "caca laboral"}
 
 def extract_user_and_datetime(message: str) -> Tuple[datetime, str]:
     datetime_str, _, rest = message.partition(' - ')
-    datetime_str = datetime_str.strip().replace(' p. m.', ' PM').replace(' a. m.', ' AM')
+    datetime_str = datetime_str.strip()
     parts = datetime_str.split('/')
     parts[0], parts[1] = parts[0].zfill(2), parts[1].zfill(2)  # Zero-padding for day and month
     datetime_str = '/'.join(parts)
-    datetime_obj = datetime.strptime(datetime_str, '%d/%m/%Y, %I:%M %p')
+    datetime_str = datetime_str.replace('\u202f', ' ')
+    print(datetime_str)
+    datetime_obj = datetime.strptime(datetime_str, '%m/%d/%y, %I:%M %p')
 
     user, _, _ = rest.partition(':')
     return datetime_obj, user.strip()
